@@ -42,7 +42,6 @@ char *add_next_char(int fd, char *str)
     for (int i = 0; str2[i]; i++, x++)
         str3[x] = str2[i];
     str3[x] = '\0';
-    free(str2);
     return (str3);
 }
 
