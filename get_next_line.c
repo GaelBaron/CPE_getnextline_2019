@@ -23,13 +23,15 @@ char *cutter(char *str)
 
 char *add_next_char(int fd, char *str)
 {
-    char *str2 = malloc(sizeof(char) * (READ_SIZE + 1));
+    char *str2 = malloc(sizeof(char) * (READ_SIZE/READ_SIZE + 1));
     char *str3;
     int size = 0;
     int x = 0;
     int test = 0;
 
-    test = read(fd, str2, READ_SIZE);
+    str2[0] = '\0';
+    str2[1] = '\0';
+    test = read(fd, str2, READ_SIZE/READ_SIZE);
     if (test <= 0)
         return (NULL);
     for (;str[size]; size++);
@@ -40,15 +42,18 @@ char *add_next_char(int fd, char *str)
     for (int i = 0; str2[i]; i++, x++)
         str3[x] = str2[i];
     str3[x] = '\0';
+    free(str2);
     return (str3);
 }
 
 char *get_next_line(int fd)
 {
-    char *str = malloc(sizeof(char) * (READ_SIZE + 1));
+    char *str = malloc(sizeof(char) * (READ_SIZE/READ_SIZE + 1));
     int end = 0;
     int j = 0;
 
+    str[0] = '\0';
+    str[1] = '\0';
     str = add_next_char(fd, str);
     if (!str)
         return (NULL);
