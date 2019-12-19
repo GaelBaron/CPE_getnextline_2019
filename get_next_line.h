@@ -17,7 +17,7 @@
 
 
 #ifndef READ_SIZE
-#define READ_SIZE 1
+#define READ_SIZE 2
 #endif
 
 #endif
