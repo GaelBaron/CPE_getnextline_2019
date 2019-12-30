@@ -29,18 +29,19 @@ char *add_next_char(int fd, char *str)
     int x = 0;
     int test = 0;
 
-    for (int i = 0; i <= READ_SIZE * 0 + 1; i++)
-        str2[i] = '\0';
+    if (!str2)
+        return (NULL);
+    for (int i = 0; i <= READ_SIZE * 0 + 1; i++, str2[i] = '\0');
     if (read(fd, str2, READ_SIZE * 0 + 1) <= READ_SIZE * 0 + 1 - 1)
         return (NULL);
     for (;str[size]; size++);
     for (int i = 0; str2[i]; i++, size++);
     str3 = malloc(sizeof(char) * (size + 1));
-    for (;str[x]; x++)
-        str3[x] = str[x];
-    for (int i = 0; str2[i]; i++, x++)
+    if (!str3)
+        return (NULL);
+    for (;str[x]; str3[x] = str[x], x++);
+    for (int i = 0; str2[i]; i++, x++, str3[x + 1] = '\0')
         str3[x] = str2[i];
-    str3[x] = '\0';
     return (str3);
 }
 
@@ -51,12 +52,14 @@ char *get_next_line(int fd)
     int end = 0;
     int j = 0;
 
+    if (!str)
+        return (NULL);
     str[0] = '\0';
     str[1] = '\0';
     str = add_next_char(fd, str);
     if (!str)
         return (NULL);
-    for (int i = 0; str[end] != '\n'; j = 0) {
+    for (int i = 0; str[end] != '\n' && str; j = 0) {
         for (; str[j]; j++);
         end = j;
         str = add_next_char(fd, str);
